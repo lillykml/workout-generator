@@ -1,0 +1,24 @@
+{
+    "exercises": [
+        {
+            "id": "1",
+            "name": "Squats",
+            "repetitions": "15"
+        },
+        {
+            "id": "2",
+            "name": "Lunges",
+            "repetitions": "15"
+        },
+        {
+            "id": "3",
+            "name": "Sprint",
+            "repetitions": "400m"
+        },
+        {
+            "id": "4",
+            "name": "Row",
+            "repetitions": "1km"
+        }
+    ]
+}
