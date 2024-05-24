@@ -1,7 +1,7 @@
 const Exercise = ({name, repetitions}) => {
     return (
         <>
-            <li>{repetitions} {name} <button>Delete</button></li>
+            <li>{repetitions} {name} <button>Add</button></li>
         </>
     )
 }
