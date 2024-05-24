@@ -1,7 +1,8 @@
-const Exercise = ({name, repetitions}) => {
+const Exercise = ({name, id, repetitions, buttonText, clickHandler}) => {
     return (
         <>
-            <li>{repetitions} {name} <button>Add</button></li>
+            <li>{repetitions} {name} <button onClick={()=>clickHandler(id)}>
+                {buttonText}</button></li>
         </>
     )
 }

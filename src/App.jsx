@@ -12,6 +12,15 @@ function App() {
   const [newExerciseName, setNewExerciseName] = useState('')
   const [newExerciseRepetitions, setNewExerciseRepetitions] = useState('')
 
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/exercises')
+      .then(response => {
+        setExercises(response.data)
+      })
+  }, [])
+
   const newNameHandler = (event) => {
     setNewExerciseName(event.target.value)
   }
@@ -35,24 +44,27 @@ function App() {
     })
   }
 
-
-  useEffect(() => {
+  const addExerciseToWorkout = (id) => {
     axios
-      .get('http://localhost:3001/exercises')
-      .then(response => {
-        setExercises(response.data)
-      })
-  }, [])
+    .get(`http://localhost:3001/exercises/${id}`)
+    .then(response => {
+      setWorkout(workout.concat(response.data))
+    })
+  }
+
+  const removeExerciseFromWorkout = (id) => {
+    setWorkout(workout.filter(e=> e.id !== id))
+  }
 
 
   return (
     <>
     <h1>Workout Generator</h1>
     <button>Generate Workout</button>
-    <Workout workout={workout}/>
+    <Workout workout={workout} clickHandler={removeExerciseFromWorkout}/>
     <h2>Available Exercises</h2>
-    {exercises.map(exercise => <Exercise key={exercise.id} name={exercise.name} 
-        repetitions={exercise.repetitions}/>)}
+    {exercises.map(exercise => <Exercise key={exercise.id} name={exercise.name} id={exercise.id} 
+    repetitions={exercise.repetitions} buttonText="Add" clickHandler={addExerciseToWorkout}/>)}
     <NewExercise name={newExerciseName} repetitions={newExerciseRepetitions}
     nameHandler={newNameHandler} repetitionsHandler={newRepetitionsHandler} addExercise={addExercise}/>
     </>

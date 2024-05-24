@@ -23,7 +23,12 @@
     {
       "id": "c23a",
       "name": "Sumo Squats",
-      "repetitions": ""
+      "repetitions": "15"
+    },
+    {
+      "id": "14ce",
+      "name": "Jump Rope",
+      "repetitions": "5 Minutes"
     }
   ]
 }
