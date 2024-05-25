@@ -13,6 +13,7 @@ function App() {
   const [newExerciseRepetitions, setNewExerciseRepetitions] = useState('')
 
 
+  // Load all available exercises
   useEffect(() => {
     axios
       .get('http://localhost:3001/exercises')
@@ -21,6 +22,7 @@ function App() {
       })
   }, [])
 
+  // Adding a new exercise to the available exercises
   const newNameHandler = (event) => {
     setNewExerciseName(event.target.value)
   }
@@ -44,23 +46,53 @@ function App() {
     })
   }
 
+  // Generating and Modifing the workout
+  const generateUniqueId = () => {
+    return 'id-' + Math.random().toString(36).substr(2, 9);
+  }
+
   const addExerciseToWorkout = (id) => {
     axios
     .get(`http://localhost:3001/exercises/${id}`)
     .then(response => {
-      setWorkout(workout.concat(response.data))
+      const exercise = response.data
+      const newExercise = {
+        ...exercise,
+        workoutId: generateUniqueId()
+      };
+      setWorkout(workout.concat(newExercise))
     })
   }
 
   const removeExerciseFromWorkout = (id) => {
-    setWorkout(workout.filter(e=> e.id !== id))
+    setWorkout(workout.filter(e=> e.workoutId !== id))
   }
 
+  const generateWorkout = () => {
+    // randomly sample 8 exercises from my available exercises
+    const sampleSize = 8
+    const newWorkout = []
+
+    const getRandomInt = (min, max) => {
+      return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    while (newWorkout.length < sampleSize) {
+      const randomIndex = getRandomInt(0, exercises.length)
+      const exercise = exercises[randomIndex];
+      const newExercise = {
+        ...exercise,
+        workoutId: generateUniqueId()
+      }
+      newWorkout.push(newExercise)
+      }
+      setWorkout(newWorkout)
+    }
 
   return (
     <>
     <h1>Workout Generator</h1>
-    <button>Generate Workout</button>
+    <button onClick={generateWorkout}>Generate Workout</button>
     <Workout workout={workout} clickHandler={removeExerciseFromWorkout}/>
     <h2>Available Exercises</h2>
     {exercises.map(exercise => <Exercise key={exercise.id} name={exercise.name} id={exercise.id} 
