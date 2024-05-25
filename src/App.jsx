@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import Workout from './components/Workout'
-import axios from 'axios'
 import Exercise from './components/Exercise'
 import NewExercise from './components/NewExercise'
+import workoutService from './services/workout'
 
 
 function App() {
@@ -15,11 +15,9 @@ function App() {
 
   // Load all available exercises
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/exercises')
-      .then(response => {
-        setExercises(response.data)
-      })
+    workoutService
+    .getAll()
+    .then(allExercises => setExercises(allExercises))
   }, [])
 
   // Adding a new exercise to the available exercises
@@ -37,10 +35,10 @@ function App() {
       name: newExerciseName,
       repetitions: newExerciseRepetitions
     }
-    axios
-    .post('http://localhost:3001/exercises', exerciseObject)
-    .then(response => {
-      setExercises(exercises.concat(response.data))
+    workoutService
+    .create(exerciseObject)
+    .then(newExercise => {
+      setExercises(exercises.concat(newExercise))
       setNewExerciseName('')
       setNewExerciseRepetitions('')
     })
@@ -52,10 +50,9 @@ function App() {
   }
 
   const addExerciseToWorkout = (id) => {
-    axios
-    .get(`http://localhost:3001/exercises/${id}`)
-    .then(response => {
-      const exercise = response.data
+    workoutService
+    .get(id)
+    .then(exercise => {
       const newExercise = {
         ...exercise,
         workoutId: generateUniqueId()
@@ -95,8 +92,8 @@ function App() {
     <button onClick={generateWorkout}>Generate Workout</button>
     <Workout workout={workout} clickHandler={removeExerciseFromWorkout}/>
     <h2>Available Exercises</h2>
-    {exercises.map(exercise => <Exercise key={exercise.id} name={exercise.name} id={exercise.id} 
-    repetitions={exercise.repetitions} buttonText="Add" clickHandler={addExerciseToWorkout}/>)}
+    {exercises.map(exercise => <Exercise key={exercise.id} name={exercise.name}
+    repetitions={exercise.repetitions} buttonText="Add" clickHandler={()=>addExerciseToWorkout(exercise.id)}/>)}
     <NewExercise name={newExerciseName} repetitions={newExerciseRepetitions}
     nameHandler={newNameHandler} repetitionsHandler={newRepetitionsHandler} addExercise={addExercise}/>
     </>

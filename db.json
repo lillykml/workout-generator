@@ -34,6 +34,16 @@
       "id": "9c5b",
       "name": "Wallballs",
       "repetitions": "30"
+    },
+    {
+      "id": "b1df",
+      "name": "Push Ups",
+      "repetitions": "10"
+    },
+    {
+      "id": "ab44",
+      "name": "Plank",
+      "repetitions": "50 seconds"
     }
   ]
 }
