@@ -97,6 +97,23 @@ li {
   margin: 0;
 }
 
+.new-exercise-container {
+  text-align: center;
+  display: flex;
+  justify-content: center; /* Center the container horizontally */
+  align-items: center; /* Center the container vertically */
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 10px; /* Add some space between form elements */
+}
+
+label {
+  display: block; /* Make labels block-level elements */
+  margin-bottom: 5px; /* Add some space below labels */
+}
+
 @media (max-width: 1024px) {
   .exercises {
     width: 70%;
