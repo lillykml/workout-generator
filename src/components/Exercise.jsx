@@ -1,8 +1,11 @@
 const Exercise = ({name, repetitions, buttonText, clickHandler}) => {
     return (
         <>
-            <li>{repetitions} {name} <button onClick={clickHandler}>
-                {buttonText}</button></li>
+            <li className="exercise">
+                <p className="repetitions">{repetitions}</p>
+                <p className="exercise-name">{name}</p>
+                <button onClick={clickHandler}>{buttonText}</button>
+            </li>
         </>
     )
 }

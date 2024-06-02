@@ -2,40 +2,27 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
 }
 
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
+html, body {
+  margin: 0 auto;
+  padding: 0;
   min-width: 320px;
   min-height: 100vh;
+  text-align: center;
+  background: linear-gradient(to bottom, #e2bbfa, #feb47b);
 }
 
-h1 {
-  font-size: 3.2em;
+.heading {
+  font-size: 5rem;
   line-height: 1.1;
+  text-shadow: 
+    -1px -1px 0 white, 
+    1px -1px 0 white, 
+    -1px 1px 0 white, 
+    1px 1px 0 white;
 }
+
 
 button {
   border-radius: 8px;
@@ -55,6 +42,87 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+li {
+  list-style: None;
+}
+
+.exercises {
+  width: 50%;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.exercise {
+  background-color: white;
+  border-radius: 8px;
+  width: 10%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 100px;
+}
+
+.exercise button {
+  background-color: white;
+  text-align: center;
+  align-self: center; 
+  padding: 0;
+}
+
+.repetitions {
+  text-align: center;
+  font-weight: 800;
+  padding: 0;
+  margin: 0;
+}
+
+.exercise-name {
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .exercises {
+    width: 70%;
+  }
+  
+  .exercise {
+    width: 40%;
+  }
+}
+
+@media (max-width: 768px) {
+  .exercises {
+    width: 80%;
+  }
+
+  .exercise {
+    width: 20%;
+  }
+}
+
+@media (max-width: 480px) {
+  .exercise {
+    width: 60%;
+  }
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {

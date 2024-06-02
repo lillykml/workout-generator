@@ -87,16 +87,18 @@ function App() {
     }
 
   return (
-    <>
-    <h1>Workout Generator</h1>
-    <button onClick={generateWorkout}>Generate Workout</button>
-    <Workout workout={workout} clickHandler={removeExerciseFromWorkout}/>
-    <h2>Available Exercises</h2>
-    {exercises.map(exercise => <Exercise key={exercise.id} name={exercise.name}
-    repetitions={exercise.repetitions} buttonText="Add" clickHandler={()=>addExerciseToWorkout(exercise.id)}/>)}
-    <NewExercise name={newExerciseName} repetitions={newExerciseRepetitions}
-    nameHandler={newNameHandler} repetitionsHandler={newRepetitionsHandler} addExercise={addExercise}/>
-    </>
+    <div>
+      <h1 className='heading'>Workout Generator</h1>
+      <button onClick={generateWorkout}>Generate Workout</button>
+      <Workout workout={workout} clickHandler={removeExerciseFromWorkout} className="workout"/>
+      <h2>Available Exercises</h2>
+      <div className='exercises'>
+      {exercises.map(exercise => <Exercise key={exercise.id} name={exercise.name}
+      repetitions={exercise.repetitions} buttonText="+" clickHandler={()=>addExerciseToWorkout(exercise.id)}/>)}
+      </div>
+      <NewExercise name={newExerciseName} repetitions={newExerciseRepetitions}
+      nameHandler={newNameHandler} repetitionsHandler={newRepetitionsHandler} addExercise={addExercise}/>
+    </div>
   )
 }
 
