@@ -3,6 +3,7 @@ import Workout from './components/Workout'
 import Exercise from './components/Exercise'
 import NewExercise from './components/NewExercise'
 import Login from './components/Login'
+import Hero from './components/Hero'
 import workoutService from './services/workout'
 import loginService from './services/login'
 
@@ -101,12 +102,12 @@ function App() {
 
   return (
     <div>
+      <Hero />
       {!user && <Login loginHandler={login} />}
       {user && 
       <div>
         <p>{user.username} logged in</p>
         <button onClick={logout}>Logout</button>
-        <h1 className='heading'>Workout Generator</h1>
         <button onClick={generateWorkout}>Generate Workout</button>
         <Workout workout={workout} clickHandler={removeExerciseFromWorkout} className="workout" buttonText={<FontAwesomeIcon icon={faTrash} />}/>
         <h2>Available Exercises</h2>
