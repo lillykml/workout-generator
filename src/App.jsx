@@ -23,9 +23,17 @@ function App() {
     .then(allExercises => setExercises(allExercises))
   }, [])
 
+  // Store logged-in User 
+  useEffect(() => {
+    const loggedInUserJSON = window.localStorage.getItem('loggedInAppUser')
+    if (loggedInUserJSON) {
+      const user = JSON.parse(loggedInUserJSON)
+      setUser(user)
+      workoutService.setToken(user.token)
+  }}, [])
+
 
   const addExercise = (name, repetitions) => {
-    event.preventDefault()
     const exerciseObject = {
       name: name,
       repetitions: repetitions
@@ -81,22 +89,26 @@ function App() {
 
     const login = async (credentials) => {
       const loggedInUser = await loginService.login(credentials)
+      window.localStorage.setItem('loggedInAppUser', JSON.stringify(loggedInUser))
       setUser(loggedInUser)
     }
 
   return (
     <div>
       {!user && <Login loginHandler={login} />}
-      {user && <p>{user.username} logged in</p>}
-      <h1 className='heading'>Workout Generator</h1>
-      <button onClick={generateWorkout}>Generate Workout</button>
-      <Workout workout={workout} clickHandler={removeExerciseFromWorkout} className="workout" buttonText={<FontAwesomeIcon icon={faTrash} />}/>
-      <h2>Available Exercises</h2>
-      <div className='exercises'>
-      {exercises.map(exercise => <Exercise key={exercise.id} name={exercise.name}
-      repetitions={exercise.repetitions} buttonText={<FontAwesomeIcon icon={faPlus} />} clickHandler={()=>addExerciseToWorkout(exercise.id)}/>)}
-      </div>
-      <NewExercise addExercise={addExercise}/>
+      {user && 
+      <div>
+        <p>{user.username} logged in</p>
+        <h1 className='heading'>Workout Generator</h1>
+        <button onClick={generateWorkout}>Generate Workout</button>
+        <Workout workout={workout} clickHandler={removeExerciseFromWorkout} className="workout" buttonText={<FontAwesomeIcon icon={faTrash} />}/>
+        <h2>Available Exercises</h2>
+        <div className='exercises'>
+          {exercises.map(exercise => <Exercise key={exercise.id} name={exercise.name}
+          repetitions={exercise.repetitions} buttonText={<FontAwesomeIcon icon={faPlus} />} clickHandler={()=>addExerciseToWorkout(exercise.id)}/>)}
+        </div>
+        <NewExercise addExercise={addExercise}/>
+      </div>}
     </div>
   )
 }
