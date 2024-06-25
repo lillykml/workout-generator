@@ -101,7 +101,7 @@ function App() {
     }
 
   return (
-    <div>
+    <div className="py-16 bg-cover bg-center h-screen" style={{backgroundImage: "url('/img/boxing_woman.jpg')"}}>
       <Hero />
       {!user && <Login loginHandler={login} />}
       {user && 

@@ -5,7 +5,16 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        "anton": ['Anton', 'sans-serif'],
+        "chakra": ["Chakra Petch", 'sans-serif']
+      },
+      colors: {
+        'bright-yellow': '#F1FB6A',
+        'strong-purple': '#989CE3'
+      },
+    },
   },
   plugins: [],
 }
