@@ -23,7 +23,7 @@ const Login = ({ loginHandler }) => {
                     <label>Password: </label>
                     <input className='input-custom' type="password" name="password" value={password} onChange={(event) => setPassword(event.target.value)}></input>
                 </div>
-                <button className="btn-custom my-4" type="submit">Login</button>
+                <button className="btn-custom" type="submit">Login</button>
             </form>
         </div>
     )

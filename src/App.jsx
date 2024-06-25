@@ -2,8 +2,7 @@ import { useState, useEffect} from 'react'
 import Workout from './components/Workout'
 import Exercise from './components/Exercise'
 import NewExercise from './components/NewExercise'
-import Login from './components/Login'
-import SignUp from './components/SignUp'
+import User from './components/User'
 import Hero from './components/Hero'
 import workoutService from './services/workout'
 import loginService from './services/login'
@@ -11,7 +10,6 @@ import signupService from './services/signup'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
-import Togglable from './components/Togglable'
 
 function App() {
 
@@ -34,6 +32,25 @@ function App() {
       setUser(user)
       workoutService.setToken(user.token)
   }}, [])
+
+  // User handler
+  const login = async (credentials) => {
+    const loggedInUser = await loginService.login(credentials)
+    window.localStorage.setItem('loggedInAppUser', JSON.stringify(loggedInUser))
+    setUser(loggedInUser)
+  }
+
+  const logout = () => {
+    window.localStorage.removeItem('loggedInAppUser')
+    setUser(null)
+    workoutService.setToken(null)
+  }
+
+  const signup = async (name, username, password) => {
+    await signupService.signup({name, username, password})
+    await login({username, password})
+  }
+  
 
 
   const addExercise = (name, repetitions) => {
@@ -90,35 +107,11 @@ function App() {
       setWorkout(newWorkout)
     }
 
-    const login = async (credentials) => {
-      const loggedInUser = await loginService.login(credentials)
-      window.localStorage.setItem('loggedInAppUser', JSON.stringify(loggedInUser))
-      setUser(loggedInUser)
-    }
-
-    const logout = () => {
-      window.localStorage.removeItem('loggedInAppUser')
-      setUser(null)
-      workoutService.setToken(null)
-    }
-
-    const signup = async (name, username, password) => {
-      await signupService.signup({name, username, password})
-      await login({username, password})
-    }
-
-    const loginForm = () => {
-      return <Togglable buttonlabel="Login"><Login loginHandler={login} /></Togglable>
-    }
-
-    const signupForm = () => {
-      return <Togglable buttonlabel='Sign Up'><SignUp signup={signup}/></Togglable>
-    }
 
   return (
     <div className="py-16 bg-cover bg-center h-screen" style={{backgroundImage: "url('/img/boxing_woman.jpg')"}}>
       <Hero />
-      {!user && <>{loginForm()} {signupForm()}</>}
+      {!user && <User login={login} signup={signup}/>}
       {user && 
       <div>
         <p>{user.username} logged in</p>
