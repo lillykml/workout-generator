@@ -93,12 +93,19 @@ function App() {
       setUser(loggedInUser)
     }
 
+    const logout = () => {
+      window.localStorage.removeItem('loggedInAppUser')
+      setUser(null)
+      workoutService.setToken(null)
+    }
+
   return (
     <div>
       {!user && <Login loginHandler={login} />}
       {user && 
       <div>
         <p>{user.username} logged in</p>
+        <button onClick={logout}>Logout</button>
         <h1 className='heading'>Workout Generator</h1>
         <button onClick={generateWorkout}>Generate Workout</button>
         <Workout workout={workout} clickHandler={removeExerciseFromWorkout} className="workout" buttonText={<FontAwesomeIcon icon={faTrash} />}/>
