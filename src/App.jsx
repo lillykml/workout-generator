@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react'
+import { useState, useEffect, useRef} from 'react'
 import Workout from './components/Workout'
 import Exercise from './components/Exercise'
 import NewExercise from './components/NewExercise'
@@ -16,6 +16,7 @@ function App() {
   const [workout, setWorkout] = useState(null)
   const [exercises, setExercises] = useState([])
   const [user, setUser] = useState('')
+  const newExerciseRef = useRef()
 
   // Load all available exercises
   useEffect(() => {
@@ -53,16 +54,16 @@ function App() {
   
 
 
-  const addExercise = (name, repetitions) => {
+  const addExercise = async (name, repetitions) => {
+
     const exerciseObject = {
       name: name,
       repetitions: repetitions
     }
-    workoutService
-    .create(exerciseObject)
-    .then(newExercise => {
-      setExercises(exercises.concat(newExercise))
-    })
+
+    const exercise = await workoutService.create(exerciseObject)
+    setExercises(exercises.concat(exercise))
+    newExerciseRef.current.toggleVisibility()
   }
 
   // Generating and Modifing the workout
@@ -129,7 +130,7 @@ function App() {
             repetitions={exercise.repetitions} buttonText={<FontAwesomeIcon icon={faPlus} />} clickHandler={()=>addExerciseToWorkout(exercise.id)}/>)}
           </div>
         </div>
-        <NewExercise addExercise={addExercise}/>
+        <NewExercise addExercise={addExercise} ref={newExerciseRef}/>
       </div>}
     </div>
   )
