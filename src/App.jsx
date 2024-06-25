@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import Workout from './components/Workout'
 import Exercise from './components/Exercise'
 import NewExercise from './components/NewExercise'
+import Login from './components/Login'
 import workoutService from './services/workout'
+import loginService from './services/login'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
-
-
 
 function App() {
 
@@ -15,6 +15,7 @@ function App() {
   const [exercises, setExercises] = useState([])
   const [newExerciseName, setNewExerciseName] = useState('')
   const [newExerciseRepetitions, setNewExerciseRepetitions] = useState('')
+  const [user, setUser] = useState('')
 
 
   // Load all available exercises
@@ -90,8 +91,15 @@ function App() {
       setWorkout(newWorkout)
     }
 
+    const login = async (credentials) => {
+      const loggedInUser = await loginService.login(credentials)
+      setUser(loggedInUser)
+    }
+
   return (
     <div>
+      {!user && <Login loginHandler={login} />}
+      {user && <p>{user.username} logged in</p>}
       <h1 className='heading'>Workout Generator</h1>
       <button onClick={generateWorkout}>Generate Workout</button>
       <Workout workout={workout} clickHandler={removeExerciseFromWorkout} className="workout" buttonText={<FontAwesomeIcon icon={faTrash} />}/>
