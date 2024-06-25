@@ -1,16 +1,29 @@
-const NewExercise = ({name, repetitions, nameHandler, repetitionsHandler, addExercise}) => {
+import { useState } from "react"
+
+const NewExercise = ({ addExercise }) => {
+
+    const [exerciseName, setExerciseName] = useState('')
+    const [repetitions, setRepetitions] = useState('')
+
+    const add = (event) => {
+        event.preventDefault()
+        addExercise(exerciseName, repetitions)
+        setExerciseName('')
+        setRepetitions('')
+    }
+
     return (
             <>
                 <h3>Add a new exercises to the database</h3>
                 <div className="new-exercise-container">
-                    <form onSubmit={addExercise}>
+                    <form onSubmit={add}>
                         <div className="form-group">
                             <label>Name</label>
-                            <input value={name} onChange={nameHandler}/>
+                            <input value={exerciseName} onChange={(event) => setExerciseName(event.target.value)}/>
                         </div>
                         <div className="form-group">
                             <label>Repetitions</label>
-                            <input value={repetitions} onChange={repetitionsHandler}/>
+                            <input value={repetitions} onChange={(event) => setRepetitions(event.target.value)}/>
                         </div>
                         <button type="submit">Add</button>
                     </form>

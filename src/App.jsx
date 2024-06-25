@@ -13,8 +13,6 @@ function App() {
 
   const [workout, setWorkout] = useState([])
   const [exercises, setExercises] = useState([])
-  const [newExerciseName, setNewExerciseName] = useState('')
-  const [newExerciseRepetitions, setNewExerciseRepetitions] = useState('')
   const [user, setUser] = useState('')
 
 
@@ -25,27 +23,17 @@ function App() {
     .then(allExercises => setExercises(allExercises))
   }, [])
 
-  // Adding a new exercise to the available exercises
-  const newNameHandler = (event) => {
-    setNewExerciseName(event.target.value)
-  }
 
-  const newRepetitionsHandler = (event) => {
-    setNewExerciseRepetitions(event.target.value)
-  }
-
-  const addExercise = (event) => {
+  const addExercise = (name, repetitions) => {
     event.preventDefault()
     const exerciseObject = {
-      name: newExerciseName,
-      repetitions: newExerciseRepetitions
+      name: name,
+      repetitions: repetitions
     }
     workoutService
     .create(exerciseObject)
     .then(newExercise => {
       setExercises(exercises.concat(newExercise))
-      setNewExerciseName('')
-      setNewExerciseRepetitions('')
     })
   }
 
@@ -108,8 +96,7 @@ function App() {
       {exercises.map(exercise => <Exercise key={exercise.id} name={exercise.name}
       repetitions={exercise.repetitions} buttonText={<FontAwesomeIcon icon={faPlus} />} clickHandler={()=>addExerciseToWorkout(exercise.id)}/>)}
       </div>
-      <NewExercise name={newExerciseName} repetitions={newExerciseRepetitions}
-      nameHandler={newNameHandler} repetitionsHandler={newRepetitionsHandler} addExercise={addExercise}/>
+      <NewExercise addExercise={addExercise}/>
     </div>
   )
 }
