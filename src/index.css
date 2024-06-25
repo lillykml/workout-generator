@@ -17,6 +17,10 @@
     @apply hover:bg-bright-yellow hover:text-black;
   }
 
+  .btn-small {
+    @apply w-16;
+  }
+
   .input-custom {
     @apply border border-gray-300 rounded-md py-2 px-3;
     @apply text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
@@ -44,15 +48,6 @@ html, body {
     -1px 1px 0 white, 
     1px 1px 0 white;
 }
-
-/* button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-} */
-
 
 a {
   font-weight: 500;

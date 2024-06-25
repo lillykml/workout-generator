@@ -9,10 +9,11 @@ import signupService from './services/signup'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import Title from './components/Title'
 
 function App() {
 
-  const [workout, setWorkout] = useState([])
+  const [workout, setWorkout] = useState(null)
   const [exercises, setExercises] = useState([])
   const [user, setUser] = useState('')
 
@@ -111,15 +112,22 @@ function App() {
     <div>
       {!user && <Landing login={login} signup={signup}/>}
       {user && 
-      <div>
-        <p>{user.username} logged in</p>
-        <button className='btn-custom' onClick={logout}>Logout</button>
-        <button className='btn-custom' onClick={generateWorkout}>Generate Workout</button>
-        <Workout workout={workout} clickHandler={removeExerciseFromWorkout} className="workout" buttonText={<FontAwesomeIcon icon={faTrash} />}/>
-        <h2>Available Exercises</h2>
-        <div className='exercises'>
-          {exercises.map(exercise => <Exercise key={exercise.id} name={exercise.name}
-          repetitions={exercise.repetitions} buttonText={<FontAwesomeIcon icon={faPlus} />} clickHandler={()=>addExerciseToWorkout(exercise.id)}/>)}
+      <div className="min-h-screen bg-gradient-to-b from-indigo-900 to-cold-blue py-14">
+        <Title />
+        <div>
+          <p>{user.username} logged in</p>
+          <button className='btn-custom' onClick={logout}>Logout</button>
+        </div>
+        <div>
+          {workout && <Workout workout={workout} clickHandler={removeExerciseFromWorkout} className="workout" buttonText={<FontAwesomeIcon icon={faTrash} />}/>}
+          <button className='btn-custom' onClick={generateWorkout}>Generate Workout</button>
+        </div>
+        <div>
+          <h2 className="font-anton text-strong-purple text-6xl mb-4">Available Exercises</h2>
+          <div className='exercises'>
+            {exercises.map(exercise => <Exercise key={exercise.id} name={exercise.name}
+            repetitions={exercise.repetitions} buttonText={<FontAwesomeIcon icon={faPlus} />} clickHandler={()=>addExerciseToWorkout(exercise.id)}/>)}
+          </div>
         </div>
         <NewExercise addExercise={addExercise}/>
       </div>}
