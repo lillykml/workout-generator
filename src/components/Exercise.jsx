@@ -4,7 +4,7 @@ const Exercise = ({name, repetitions, buttonText, clickHandler}) => {
             <li className="exercise">
                 <p className="repetitions">{repetitions}</p>
                 <p className="exercise-name">{name}</p>
-                <button onClick={clickHandler}>{buttonText}</button>
+                <button className='btn-custom' onClick={clickHandler}>{buttonText}</button>
             </li>
         </>
     )

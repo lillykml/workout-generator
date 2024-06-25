@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Workout from './components/Workout'
 import Exercise from './components/Exercise'
 import NewExercise from './components/NewExercise'
@@ -9,13 +9,13 @@ import loginService from './services/login'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import Togglable from './components/Togglable'
 
 function App() {
 
   const [workout, setWorkout] = useState([])
   const [exercises, setExercises] = useState([])
   const [user, setUser] = useState('')
-
 
   // Load all available exercises
   useEffect(() => {
@@ -100,15 +100,19 @@ function App() {
       workoutService.setToken(null)
     }
 
+    const loginForm = () => {
+      return <Togglable buttonlabel="Login"><Login loginHandler={login} /></Togglable>
+    }
+
   return (
     <div className="py-16 bg-cover bg-center h-screen" style={{backgroundImage: "url('/img/boxing_woman.jpg')"}}>
       <Hero />
-      {!user && <Login loginHandler={login} />}
+      {!user && loginForm()}
       {user && 
       <div>
         <p>{user.username} logged in</p>
-        <button onClick={logout}>Logout</button>
-        <button onClick={generateWorkout}>Generate Workout</button>
+        <button className='btn-custom' onClick={logout}>Logout</button>
+        <button className='btn-custom' onClick={generateWorkout}>Generate Workout</button>
         <Workout workout={workout} clickHandler={removeExerciseFromWorkout} className="workout" buttonText={<FontAwesomeIcon icon={faTrash} />}/>
         <h2>Available Exercises</h2>
         <div className='exercises'>

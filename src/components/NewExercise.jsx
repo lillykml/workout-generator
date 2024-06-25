@@ -25,7 +25,7 @@ const NewExercise = ({ addExercise }) => {
                             <label>Repetitions</label>
                             <input value={repetitions} onChange={(event) => setRepetitions(event.target.value)}/>
                         </div>
-                        <button type="submit">Add</button>
+                        <button className='btn-custom' type="submit">Add</button>
                     </form>
                 </div>
             </>

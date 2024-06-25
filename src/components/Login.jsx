@@ -17,13 +17,13 @@ const Login = ({ loginHandler }) => {
             <form onSubmit={login}>
                 <div>
                     <label>Username: </label>
-                    <input type="text" name="username" value={username} onChange={(event) => setUsername(event.target.value)}></input>
+                    <input className='input-custom'type="text" name="username" value={username} onChange={(event) => setUsername(event.target.value)}></input>
                 </div>
                 <div>
                     <label>Password: </label>
-                    <input type="password" name="password" value={password} onChange={(event) => setPassword(event.target.value)}></input>
+                    <input className='input-custom' type="password" name="password" value={password} onChange={(event) => setPassword(event.target.value)}></input>
                 </div>
-                <button type="submit">Login</button>
+                <button className="btn-custom" type="submit">Login</button>
             </form>
         </div>
     )

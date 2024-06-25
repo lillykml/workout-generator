@@ -6,13 +6,20 @@ export default {
   ],
   theme: {
     extend: {
+      lineHeight: {
+        DEFAULT: '1.5',
+      },
+      fontWeight: {
+        DEFAULT: '400',
+      },
       fontFamily: {
         "anton": ['Anton', 'sans-serif'],
         "chakra": ["Chakra Petch", 'sans-serif']
       },
       colors: {
         'bright-yellow': '#F1FB6A',
-        'strong-purple': '#989CE3'
+        'strong-purple': '#989CE3',
+        'cold-blue': '#6E91EF'
       },
     },
   },
