@@ -2,8 +2,7 @@ import { useState, useEffect} from 'react'
 import Workout from './components/Workout'
 import Exercise from './components/Exercise'
 import NewExercise from './components/NewExercise'
-import User from './components/User'
-import Hero from './components/Hero'
+import Landing from './components/Landing'
 import workoutService from './services/workout'
 import loginService from './services/login'
 import signupService from './services/signup'
@@ -109,9 +108,8 @@ function App() {
 
 
   return (
-    <div className="py-16 bg-cover bg-center h-screen" style={{backgroundImage: "url('/img/boxing_woman.jpg')"}}>
-      <Hero />
-      {!user && <User login={login} signup={signup}/>}
+    <div>
+      {!user && <Landing login={login} signup={signup}/>}
       {user && 
       <div>
         <p>{user.username} logged in</p>
