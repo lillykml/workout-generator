@@ -44,6 +44,7 @@ function App() {
   const logout = () => {
     window.localStorage.removeItem('loggedInAppUser')
     setUser(null)
+    setWorkout(null)
     workoutService.setToken(null)
   }
 
@@ -52,8 +53,6 @@ function App() {
     await login({username, password})
   }
   
-
-
   const addExercise = async (name, repetitions) => {
 
     const exerciseObject = {
@@ -115,15 +114,15 @@ function App() {
       {user && 
       <div className="min-h-screen bg-gradient-to-b from-indigo-900 to-cold-blue py-14">
         <Title />
-        <div>
+        <div className='mb-7'>
           <p>{user.username} logged in</p>
           <button className='btn-custom' onClick={logout}>Logout</button>
         </div>
-        <div>
+        <div className='mb-7'>
           {workout && <Workout workout={workout} clickHandler={removeExerciseFromWorkout} className="workout" buttonText={<FontAwesomeIcon icon={faTrash} />}/>}
           <button className='btn-custom' onClick={generateWorkout}>Generate Workout</button>
         </div>
-        <div>
+        <div className='mb-7'>
           <h2 className="font-anton text-strong-purple text-6xl mb-4">Available Exercises</h2>
           <div className='exercises'>
             {exercises.map(exercise => <Exercise key={exercise.id} name={exercise.name}
