@@ -125,8 +125,7 @@ function App() {
         <div className='mb-7'>
           <h2 className="font-anton text-strong-purple text-6xl mb-4">Available Exercises</h2>
           <div className='exercises'>
-            {exercises.map(exercise => <Exercise key={exercise.id} name={exercise.name}
-            repetitions={exercise.repetitions} buttonText={<FontAwesomeIcon icon={faPlus} />} clickHandler={()=>addExerciseToWorkout(exercise.id)}/>)}
+            {exercises.map(exercise => <Exercise key={exercise.id} exercise={exercise} buttonText={<FontAwesomeIcon icon={faPlus} />} clickHandler={()=>addExerciseToWorkout(exercise.id)}/>)}
           </div>
         </div>
         <NewExercise addExercise={addExercise} ref={newExerciseRef}/>
