@@ -21,13 +21,16 @@ const Landing = ({ login, signup }) => {
                 <div className="w-1/2 float-left overflow-hidden">
                     <img src="./img/pexels-cottonbro-4752861.jpg" alt="man working out with ropes" className="object-cover object-center w-full h-full" />
                 </div>
-                <div className="bg-dark-purple flex flex-col justify-evenly p-24">
-                    <h2 className="font-anton text-strong-purple text-7xl mb-4"> More than just your everyday workout.</h2>
-                    <ul className="space-y-4">
-                        <li className="font-anton text-white text-xl"><FontAwesomeIcon icon={faCheck} className="pr-4"/>Broad library of exercises</li>
-                        <li className="font-anton text-white text-xl"><FontAwesomeIcon icon={faCheck} className="pr-4"/>Random workout generator</li>
-                        <li className="font-anton text-white text-xl"><FontAwesomeIcon icon={faCheck} className="pr-4"/>Endless customization</li>
-                    </ul>
+                <div className="bg-dark-purple flex flex-col justify-evenly p-24 content-center">
+                    <h2 className="font-anton text-bright-yellow text-7xl mb-4"> More than just your everyday workout.</h2>
+                    <div className="w-full flex justify-center">
+                        <ul className="space-y-4 text-left">
+                            <li className=" text-white text-xl"><FontAwesomeIcon icon={faCheck} className="pr-4"/>Broad library of exercises</li>
+                            <li className=" text-white text-xl"><FontAwesomeIcon icon={faCheck} className="pr-4"/>Random workout generator</li>
+                            <li className=" text-white text-xl"><FontAwesomeIcon icon={faCheck} className="pr-4"/>Endless customization</li>
+                        </ul>
+                    </div>
+                    <button className="btn-custom mx-auto">Get Started</button>
                 </div>
             </div>
         </div>
