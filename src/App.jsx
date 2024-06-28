@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef} from 'react'
+import { Route, Routes } from 'react-router-dom'
 import Workout from './components/Workout'
 import Exercise from './components/Exercise'
 import NewExercise from './components/NewExercise'
 import Landing from './components/Landing'
+import Menu from './components/Menu'
 import workoutService from './services/workout'
 import loginService from './services/login'
 import signupService from './services/signup'
@@ -113,23 +115,34 @@ function App() {
       {!user && <Landing login={login} signup={signup}/>}
       {user && 
       <div className="min-h-screen bg-gradient-to-b from-indigo-900 to-cold-blue py-14">
-        <Title />
-        <div className='mb-7'>
-          <p>{user.username} logged in</p>
-          <button className='btn-custom' onClick={logout}>Logout</button>
-        </div>
-        <div className='mb-7'>
-          {workout && <Workout workout={workout} clickHandler={removeExerciseFromWorkout} className="workout" buttonText={<FontAwesomeIcon icon={faTrash} />}/>}
-          <button className='btn-custom' onClick={generateWorkout}>Generate Workout</button>
-        </div>
-        <div className='mb-7'>
+        <Menu />
+        <Routes>
+          <Route path="/" element={
+          <>
+            <Title />
+            <div className='mb-7'>
+              <p>{user.username} logged in</p>
+              <button className='btn-custom' onClick={logout}>Logout</button>
+            </div>
+            <div className='mb-7'>
+              {workout && <Workout workout={workout} clickHandler={removeExerciseFromWorkout} className="workout" buttonText={<FontAwesomeIcon icon={faTrash} />}/>}
+              <button className='btn-custom' onClick={generateWorkout}>Generate Workout</button>
+            </div>
+          </>} />
+          <Route path="/exercises" element={<>
+            <div className='mb-7'>
           <h2 className="font-anton text-strong-purple text-6xl mb-4">Available Exercises</h2>
           <div className='exercises'>
             {exercises.map(exercise => <Exercise key={exercise.id} exercise={exercise} buttonText={<FontAwesomeIcon icon={faPlus} />} clickHandler={()=>addExerciseToWorkout(exercise.id)}/>)}
+            <NewExercise addExercise={addExercise} ref={newExerciseRef}/>
           </div>
         </div>
-        <NewExercise addExercise={addExercise} ref={newExerciseRef}/>
-      </div>}
+        </>} />
+          <Route path="/workouts" element={<h1>Empty</h1>} />
+        </Routes>
+        
+      </div>
+      }
     </div>
   )
 }
