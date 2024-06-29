@@ -115,15 +115,11 @@ function App() {
       {!user && <Landing login={login} signup={signup}/>}
       {user && 
       <div className="min-h-screen bg-gradient-to-b from-indigo-900 to-cold-blue py-14">
-        <Menu />
+        <Menu user={user.username} logout={logout}/>
         <Routes>
           <Route path="/" element={
           <>
             <Title />
-            <div className='mb-7'>
-              <p>{user.username} logged in</p>
-              <button className='btn-custom' onClick={logout}>Logout</button>
-            </div>
             <div className='mb-7'>
               {workout && <Workout workout={workout} clickHandler={removeExerciseFromWorkout} className="workout" buttonText={<FontAwesomeIcon icon={faTrash} />}/>}
               <button className='btn-custom' onClick={generateWorkout}>Generate Workout</button>
