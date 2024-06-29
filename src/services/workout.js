@@ -1,6 +1,7 @@
 import axios from "axios"
 
 const baseUrl = "/api/exercises"
+const workoutsUrl = "/api/workouts"
 
 let token = null
 
@@ -23,4 +24,9 @@ const get = exerciseId => {
     return request.then(response=>response.data)
 }
 
-export default {getAll, create, get, setToken}
+const getAllWorkouts = () => {
+    const request = axios.get(workoutsUrl)
+    return request.then(response=>response.data)
+}
+
+export default {getAll, create, get, setToken, getAllWorkouts}

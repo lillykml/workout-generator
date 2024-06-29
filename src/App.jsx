@@ -1,19 +1,18 @@
 import { useState, useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import Workout from './components/Workout'
 import Exercises from './pages/Exercises'
+import Home from './pages/Home'
+import Workouts from './pages/Workouts'
 import Landing from './components/Landing'
 import Menu from './components/Menu'
 import workoutService from './services/workout'
 import loginService from './services/login'
 import signupService from './services/signup'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import Title from './components/Title'
 
 function App() {
 
+  const [workouts, setWorkouts] = useState([])
   const [workout, setWorkout] = useState(null)
   const [exercises, setExercises] = useState([])
   const [user, setUser] = useState('')
@@ -23,6 +22,14 @@ function App() {
     workoutService
     .getAll()
     .then(allExercises => setExercises(allExercises))
+  }, [])
+
+
+  // Load all available workouts
+  useEffect(() => {
+    workoutService
+    .getAllWorkouts()
+    .then(allWorkouts => setWorkouts(allWorkouts))
   }, [])
 
   // Store logged-in User 
@@ -115,18 +122,10 @@ function App() {
       <div className="min-h-screen bg-gradient-to-b from-indigo-900 to-cold-blue py-14">
         <Menu user={user.username} logout={logout}/>
         <Routes>
-          <Route path="/" element={
-          <>
-            <Title />
-            <div className='mb-7'>
-              {workout && <Workout workout={workout} clickHandler={removeExerciseFromWorkout} className="workout" buttonText={<FontAwesomeIcon icon={faTrash} />}/>}
-              <button className='btn-custom' onClick={generateWorkout}>Generate Workout</button>
-            </div>
-          </>} />
+          <Route path="/" element={<Home workout={workout} removeExerciseFromWorkout={removeExerciseFromWorkout} generateWorkout={generateWorkout}/>} />
           <Route path="/exercises" element={<Exercises exercises={exercises} addExerciseToWorkout={addExerciseToWorkout} addExercise={addExercise}/>} />
-          <Route path="/workouts" element={<h1>Empty</h1>} />
+          <Route path="/workouts" element={<Workouts workouts={workouts}/>} />
         </Routes>
-        
       </div>
       }
     </div>
