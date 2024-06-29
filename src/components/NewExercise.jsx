@@ -1,28 +1,24 @@
-import { useState, forwardRef, useImperativeHandle } from "react"
+import { useState } from "react"
 
-const NewExercise = forwardRef((props, refs) => {
+const NewExercise = ({ addExercise }) => {
 
     const [visible, setVisible] = useState(false)
     const [exerciseName, setExerciseName] = useState('')
     const [repetitions, setRepetitions] = useState('')
+    const [category, setCategory] = useState('')
 
     const add = (event) => {
         event.preventDefault()
-        props.addExercise(exerciseName, repetitions)
+        addExercise(exerciseName, repetitions, category)
         setExerciseName('')
         setRepetitions('')
+        setCategory('')
+        toggleVisibility()
     }
 
     const toggleVisibility = () => {
         setVisible(!visible)
     }
-
-    useImperativeHandle(refs, () => {
-        return {
-          toggleVisibility
-        }
-      })
-    
 
     return (
             <>
@@ -40,14 +36,19 @@ const NewExercise = forwardRef((props, refs) => {
                             <label>Repetitions</label>
                             <input className='input-custom' value={repetitions} onChange={(event) => setRepetitions(event.target.value)}/>
                         </div>
+                        <div className="form-group">
+                            <label>Category</label>
+                            <input className="ml-4" type="radio" name="category" value="abs" onChange={(event)=>setCategory(event.target.value)}/>Abs
+                            <input className="ml-4" type="radio" name="category" value="upper body" onChange={(event)=>setCategory(event.target.value)}/>Upper Body
+                            <input className="ml-4" type="radio" name="category" value="lower body" onChange={(event)=>setCategory(event.target.value)}/>Lower Body
+                            <input className="ml-4" type="radio" name="category" value="full body" onChange={(event)=>setCategory(event.target.value)}/>Full Body
+                        </div>
                         <button className='btn-custom' type="submit">Add</button>
                     </form>
                 </div>
             </div>}
             </>
     )
-})
-
-NewExercise.displayName = 'NewExercise'
+}
 
 export default NewExercise
