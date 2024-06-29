@@ -10,7 +10,7 @@ import loginService from './services/login'
 import signupService from './services/signup'
 
 
-function App() {
+const App = () => {
 
   const [workouts, setWorkouts] = useState([])
   const [workout, setWorkout] = useState(null)
@@ -114,6 +114,19 @@ function App() {
       setWorkout(newWorkout)
     }
 
+  const saveWorkout = async () => {
+
+    console.log(user)
+
+    const newWorkout = {
+      name: 'New Workout',
+      user: user.id,
+      exercises: workout.map(exercise => exercise.id)
+    }
+    const savedWorkout = await workoutService.saveWorkout(newWorkout)
+    setWorkouts(workouts.concat(savedWorkout))
+  }
+
 
   return (
     <div>
@@ -122,7 +135,7 @@ function App() {
       <div className="min-h-screen bg-gradient-to-b from-indigo-900 to-cold-blue py-14">
         <Menu user={user.username} logout={logout}/>
         <Routes>
-          <Route path="/" element={<Home workout={workout} removeExerciseFromWorkout={removeExerciseFromWorkout} generateWorkout={generateWorkout}/>} />
+          <Route path="/" element={<Home workout={workout} removeExerciseFromWorkout={removeExerciseFromWorkout} generateWorkout={generateWorkout} save={saveWorkout}/>} />
           <Route path="/exercises" element={<Exercises exercises={exercises} addExerciseToWorkout={addExerciseToWorkout} addExercise={addExercise}/>} />
           <Route path="/workouts" element={<Workouts workouts={workouts}/>} />
         </Routes>

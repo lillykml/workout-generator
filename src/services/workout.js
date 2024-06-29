@@ -29,4 +29,9 @@ const getAllWorkouts = () => {
     return request.then(response=>response.data)
 }
 
-export default {getAll, create, get, setToken, getAllWorkouts}
+const saveWorkout = (newWorkout) => {
+    const request = axios.post(workoutsUrl, newWorkout)
+    return request.then(response=>response.data)
+}
+
+export default {getAll, create, get, setToken, getAllWorkouts, saveWorkout}
