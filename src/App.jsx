@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useMatch } from 'react-router-dom'
 import Exercises from './pages/Exercises'
 import Home from './pages/Home'
 import Workouts from './pages/Workouts'
 import Landing from './components/Landing'
 import Menu from './components/Menu'
+import Workout from './components/Workout'
 import workoutService from './services/workout'
 import loginService from './services/login'
 import signupService from './services/signup'
@@ -13,9 +14,13 @@ import signupService from './services/signup'
 const App = () => {
 
   const [workouts, setWorkouts] = useState([])
-  const [workout, setWorkout] = useState(null)
+  const [workout, setWorkout] = useState({exercises:[]})
   const [exercises, setExercises] = useState([])
   const [user, setUser] = useState('')
+  const match = useMatch("/workouts/:id")
+  const displayedWorkout = match 
+  ? workouts.find(workout => workout.id === match.params.id)
+  : null
 
   // Load all available exercises
   useEffect(() => {
@@ -41,7 +46,7 @@ const App = () => {
       workoutService.setToken(user.token)
   }}, [])
 
-  // User handler
+  // User handlers
   const login = async (credentials) => {
     const loggedInUser = await loginService.login(credentials)
     window.localStorage.setItem('loggedInAppUser', JSON.stringify(loggedInUser))
@@ -60,6 +65,7 @@ const App = () => {
     await login({username, password})
   }
   
+  // New Exercise Handler
   const addExercise = async (name, repetitions, category) => {
 
     const exerciseObject = {
@@ -85,31 +91,40 @@ const App = () => {
         ...exercise,
         workoutId: generateUniqueId()
       };
-      setWorkout(workout.concat(newExercise))
+      setWorkout(prevWorkout => ({
+        ...prevWorkout,
+        exercises: prevWorkout.exercises.concat(newExercise)
+      }));
     })
   }
 
   const removeExerciseFromWorkout = (id) => {
-    setWorkout(workout.filter(e=> e.workoutId !== id))
+    setWorkout(prevWorkout => ({
+      ...prevWorkout,
+      exercises: prevWorkout.exercises.filter(e => e.workoutId !== id)
+    }));
   }
 
   const generateWorkout = () => {
     // randomly sample 8 exercises from my available exercises
     const sampleSize = 8
-    const newWorkout = []
+    const newWorkout = {
+      name: "New Workout",
+      exercises: []
+    }
 
     const getRandomInt = (min, max) => {
       return Math.floor(Math.random() * (max - min)) + min;
     }
 
-    while (newWorkout.length < sampleSize) {
+    while (newWorkout.exercises.length < sampleSize) {
       const randomIndex = getRandomInt(0, exercises.length)
       const exercise = exercises[randomIndex];
       const newExercise = {
         ...exercise,
         workoutId: generateUniqueId()
       }
-      newWorkout.push(newExercise)
+      newWorkout.exercises.push(newExercise)
       }
       setWorkout(newWorkout)
     }
@@ -121,7 +136,7 @@ const App = () => {
     const newWorkout = {
       name: 'New Workout',
       user: user.id,
-      exercises: workout.map(exercise => exercise.id)
+      exercises: workout.exercises.map(exercise => exercise.id)
     }
     const savedWorkout = await workoutService.saveWorkout(newWorkout)
     setWorkouts(workouts.concat(savedWorkout))
@@ -137,6 +152,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home workout={workout} removeExerciseFromWorkout={removeExerciseFromWorkout} generateWorkout={generateWorkout} save={saveWorkout}/>} />
           <Route path="/exercises" element={<Exercises exercises={exercises} addExerciseToWorkout={addExerciseToWorkout} addExercise={addExercise}/>} />
+          <Route path="/workouts/:id" element={<Workout workout={displayedWorkout} clickHandler={()=>{}} buttonText={"None"}/>} />
           <Route path="/workouts" element={<Workouts workouts={workouts}/>} />
         </Routes>
       </div>
