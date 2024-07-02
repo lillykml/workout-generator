@@ -14,7 +14,7 @@ import signupService from './services/signup'
 const App = () => {
 
   const [workouts, setWorkouts] = useState([])
-  const [workout, setWorkout] = useState({exercises:[]})
+  const [workout, setWorkout] = useState(null)
   const [exercises, setExercises] = useState([])
   const [user, setUser] = useState('')
   const match = useMatch("/workouts/:id")
@@ -35,7 +35,7 @@ const App = () => {
     workoutService
     .getAllWorkouts()
     .then(allWorkouts => setWorkouts(allWorkouts))
-  }, [])
+  }, [workouts])
 
   // Store logged-in User 
   useEffect(() => {
@@ -109,7 +109,7 @@ const App = () => {
     // randomly sample 8 exercises from my available exercises
     const sampleSize = 8
     const newWorkout = {
-      name: "New Workout",
+      name: "",
       exercises: []
     }
 
@@ -131,15 +131,14 @@ const App = () => {
 
   const saveWorkout = async () => {
 
-    console.log(workout.name)
-
     const newWorkout = {
       name: workout.name,
       user: user.id,
       exercises: workout.exercises.map(exercise => exercise.id)
     }
     const savedWorkout = await workoutService.saveWorkout(newWorkout)
-    setWorkouts(workouts.concat(savedWorkout))
+    setWorkout(null)
+    setWorkouts(...workouts, savedWorkout)
   }
 
   const rename = (newName) => {
