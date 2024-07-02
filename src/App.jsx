@@ -159,7 +159,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home workout={workout} removeExerciseFromWorkout={removeExerciseFromWorkout} generateWorkout={generateWorkout} save={saveWorkout} rename={rename}/>} />
           <Route path="/exercises" element={<Exercises exercises={exercises} addExerciseToWorkout={addExerciseToWorkout} addExercise={addExercise}/>} />
-          <Route path="/workouts/:id" element={<Workout workout={displayedWorkout}/>} />
+          <Route path="/workouts/:id" element={displayedWorkout && <Workout workout={displayedWorkout}/>} />
           <Route path="/workouts" element={<Workouts workouts={workouts}/>} />
         </Routes>
       </div>

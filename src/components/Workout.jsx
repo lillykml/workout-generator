@@ -4,6 +4,10 @@ import { useState } from "react"
 
 const Workout = ({workout, clickHandler, buttonText, rename}) => {
 
+    if (!workout) {
+        return <div>Loading...</div>; // Or any other placeholder content
+    }
+
     const [workoutName, setWorkoutName] = useState(workout.name || "")
 
     const changeWorkoutName = (event) => {
