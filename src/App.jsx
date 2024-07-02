@@ -131,15 +131,23 @@ const App = () => {
 
   const saveWorkout = async () => {
 
-    console.log(user)
+    console.log(workout.name)
 
     const newWorkout = {
-      name: 'New Workout',
+      name: workout.name,
       user: user.id,
       exercises: workout.exercises.map(exercise => exercise.id)
     }
     const savedWorkout = await workoutService.saveWorkout(newWorkout)
     setWorkouts(workouts.concat(savedWorkout))
+  }
+
+  const rename = (newName) => {
+    console.log(workout)
+    setWorkout(prevWorkout => ({
+      ...prevWorkout,
+      name: newName
+    }))
   }
 
 
@@ -150,9 +158,9 @@ const App = () => {
       <div className="min-h-screen bg-gradient-to-b from-indigo-900 to-cold-blue py-14">
         <Menu user={user.username} logout={logout}/>
         <Routes>
-          <Route path="/" element={<Home workout={workout} removeExerciseFromWorkout={removeExerciseFromWorkout} generateWorkout={generateWorkout} save={saveWorkout}/>} />
+          <Route path="/" element={<Home workout={workout} removeExerciseFromWorkout={removeExerciseFromWorkout} generateWorkout={generateWorkout} save={saveWorkout} rename={rename}/>} />
           <Route path="/exercises" element={<Exercises exercises={exercises} addExerciseToWorkout={addExerciseToWorkout} addExercise={addExercise}/>} />
-          <Route path="/workouts/:id" element={<Workout workout={displayedWorkout} clickHandler={()=>{}} buttonText={"None"}/>} />
+          <Route path="/workouts/:id" element={<Workout workout={displayedWorkout}/>} />
           <Route path="/workouts" element={<Workouts workouts={workouts}/>} />
         </Routes>
       </div>

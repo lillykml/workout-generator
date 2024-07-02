@@ -1,10 +1,19 @@
 import Exercise from "./Exercise"
+import WorkoutTitle from "./WorkoutTitle"
+import { useState } from "react"
 
-const Workout = ({workout, clickHandler, buttonText}) => {
+const Workout = ({workout, clickHandler, buttonText, rename}) => {
+
+    const [workoutName, setWorkoutName] = useState(workout.name || "")
+
+    const changeWorkoutName = (event) => {
+        setWorkoutName(event.target.value)
+        rename(event.target.value)
+    }
 
     return (
         <div>
-            <h2 className="font-anton text-strong-purple text-6xl m-4">Your Workout</h2>
+            <WorkoutTitle name={workoutName} changeName={changeWorkoutName}/>
             <div className="exercises">
                 {workout.exercises.map(exercise => <Exercise key={exercise.workoutId} exercise={exercise} buttonText={buttonText} clickHandler={()=>clickHandler(exercise.workoutId)}/>)}
             </div>
